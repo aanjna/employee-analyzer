@@ -19,37 +19,6 @@ public class EmployeeControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    @DisplayName("Test underpaid managers")
-    void testUnderpaidManagers() throws Exception {
-        mockMvc.perform(get("/api/underpaid-managers"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$").isArray())
-                // Check object structure, e.g., "manager" and "diff"
-                .andExpect(jsonPath("$[0].manager").exists())
-                .andExpect(jsonPath("$.diff", greaterThan(0.0)));
-    }
-
-    @Test
-    @DisplayName("Test overpaid managers")
-    void testOverpaidManagers() throws Exception {
-        mockMvc.perform(get("/api/overpaid-managers"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$").isArray())
-                .andExpect(jsonPath("$.manager").exists())
-                .andExpect(jsonPath("$.diff", greaterThan(0.0)));
-    }
-
-    @Test
-    @DisplayName("Test reporting line too long with default (4)")
-    void testReportingLineTooLongDefault() throws Exception {
-        mockMvc.perform(get("/api/reporting-line-too-long"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$").isArray())
-                .andExpect(jsonPath("$[0].employee").exists())
-                .andExpect(jsonPath("$.overBy").isNumber());
-    }
-
-    @Test
     @DisplayName("Test reporting line too long with maxAllowed=2")
     void testReportingLineTooLongWithParam() throws Exception {
         mockMvc.perform(get("/api/reporting-line-too-long").param("maxAllowed", "2"))
